@@ -1,33 +1,50 @@
 package com.example.prioping.ui.logs
 
-import androidx.fragment.app.Fragment
 import android.os.Bundle
+import android.service.notification.StatusBarNotification
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.example.prioping.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.prioping.databinding.FragmentLogsBinding
 
 class LogsFragment : Fragment() {
 
-    private lateinit var viewModel: LogsViewModel
-    private lateinit var recyclerView: RecyclerView
+    private val viewModel: LogsViewModel by viewModels()
+    private var _binding: FragmentLogsBinding? = null
+    private val binding get() = _binding!!
+
+    private lateinit var adapter: NotificationAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val root = inflater.inflate(R.layout.fragment_logs, container, false)
-        recyclerView = root.findViewById(R.id.logs_recycler_view)
-        return root
+    ): View {
+        _binding = FragmentLogsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(LogsViewModel::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        // Setup RecyclerView with the ViewModel
+        adapter = NotificationAdapter()
+
+        binding.logsRecyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = this@LogsFragment.adapter
+        }
+
+        viewModel.notifications.observe(viewLifecycleOwner) { notifications: List<StatusBarNotification> ->
+            adapter.notifications = notifications
+        }
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
-

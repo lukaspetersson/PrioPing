@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ToggleButton
+import androidx.fragment.app.viewModels
 import com.example.prioping.R
 
 class SettingsFragment : Fragment() {
@@ -25,7 +26,7 @@ class SettingsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
+        val viewModel: SettingsViewModel by viewModels()
 
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
