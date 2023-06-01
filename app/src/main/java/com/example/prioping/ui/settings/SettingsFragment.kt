@@ -26,7 +26,11 @@ class SettingsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val viewModel: SettingsViewModel by viewModels()
+        val viewModel: SettingsViewModel by viewModels {
+            SettingsViewModel.SettingsViewModelFactory(
+                requireContext()
+            )
+        }
 
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
