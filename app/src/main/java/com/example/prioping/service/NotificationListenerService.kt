@@ -1,15 +1,14 @@
 package com.example.prioping.service
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.NotificationManager.IMPORTANCE_HIGH
-import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
-import android.os.Build
+
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
-import androidx.core.app.NotificationCompat
 import androidx.lifecycle.MutableLiveData
+import com.example.prioping.MyApplication
+import com.example.prioping.data.NotificationEntity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class NotificationService : NotificationListenerService() {
 
@@ -17,35 +16,23 @@ class NotificationService : NotificationListenerService() {
         val notifications = MutableLiveData<List<StatusBarNotification>>()
     }
 
-    private val notificationId = 1
-    private val channelId = "NotificationChannel"
+    private val notificationDao = MyApplication.database.notificationDao()
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
         super.onNotificationPosted(sbn)
-        notifications.postValue(activeNotifications.toList())
-        showNotification()
+        sbn?.let {
+            val title = it.notification.extras.getString("android.title")
+            val text = it.notification.extras.getString("android.text")
+            val notification = NotificationEntity(timestamp = System.currentTimeMillis(), title = title, text = text, packageName = it.packageName)
+            CoroutineScope(Dispatchers.IO).launch {
+                notificationDao.insert(notification)
+            }
+        }
     }
 
     override fun onNotificationRemoved(sbn: StatusBarNotification?) {
         super.onNotificationRemoved(sbn)
         notifications.postValue(activeNotifications.toList())
-    }
-
-    private fun showNotification() {
-        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId, "Notifications", IMPORTANCE_HIGH)
-            notificationManager.createNotificationChannel(channel)
-        }
-
-        val notification = NotificationCompat.Builder(this, channelId)
-            .setContentTitle("New Notification")
-            .setContentText("A new notification has been logged.")
-            .setSmallIcon(R.drawable.ic_launcher_foreground) // Set your own notification icon here
-            .build()
-
-        notificationManager.notify(notificationId, notification)
     }
 }
 

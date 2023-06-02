@@ -1,6 +1,6 @@
 package com.example.prioping.ui.logs
 
-import android.service.notification.StatusBarNotification
+import com.example.prioping.data.NotificationEntity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -8,7 +8,7 @@ import com.example.prioping.databinding.ItemNotificationBinding
 
 class NotificationAdapter : RecyclerView.Adapter<NotificationAdapter.ViewHolder>() {
 
-    var notifications = listOf<StatusBarNotification>()
+    var notifications = listOf<NotificationEntity>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -27,12 +27,11 @@ class NotificationAdapter : RecyclerView.Adapter<NotificationAdapter.ViewHolder>
     override fun getItemCount() = notifications.size
 
     class ViewHolder(private val binding: ItemNotificationBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(notification: StatusBarNotification) {
+        fun bind(notification: NotificationEntity) {
             binding.apply {
-                notificationTitle.text = notification.notification.extras.getString("android.title")
-                notificationText.text = notification.notification.extras.getString("android.text")
+                notificationTitle.text = notification.title
+                notificationText.text = notification.text
             }
         }
     }
 }
-

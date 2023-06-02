@@ -10,6 +10,5 @@
         android:layout_height="wrap_content"
         android:textOn="Service On"
         android:textOff="Service Off" />
-
 </RelativeLayout>
 

@@ -24,6 +24,7 @@ class SettingsFragment : Fragment() {
         return root
     }
 
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val viewModel: SettingsViewModel by viewModels {

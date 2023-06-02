@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.prioping.R
 import com.example.prioping.databinding.FragmentLogsBinding
 
 class LogsFragment : Fragment() {
 
-    private val viewModel: LogsViewModel by viewModels()
+    private val logsViewModel: LogsViewModel by viewModels()
     private var _binding: FragmentLogsBinding? = null
     private val binding get() = _binding!!
 
@@ -27,22 +29,17 @@ class LogsFragment : Fragment() {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = NotificationAdapter()
+        val adapter = NotificationAdapter()
+        view.findViewById<RecyclerView>(R.id.notificationsRecyclerView).adapter = adapter
 
-        binding.logsRecyclerView.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = this@LogsFragment.adapter
-        }
-
-        viewModel.notifications.observe(viewLifecycleOwner) { notifications: List<StatusBarNotification> ->
+        logsViewModel.notifications.observe(viewLifecycleOwner) { notifications ->
             adapter.notifications = notifications
         }
-
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
