@@ -1,5 +1,6 @@
 package com.example.prioping.ui.logs
 
+import android.graphics.Color
 import com.example.prioping.data.NotificationEntity
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -29,8 +30,18 @@ class NotificationAdapter : RecyclerView.Adapter<NotificationAdapter.ViewHolder>
     class ViewHolder(private val binding: ItemNotificationBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(notification: NotificationEntity) {
             binding.apply {
-                notificationTitle.text = notification.title
-                notificationText.text = notification.text
+                notificationTitle.text = "Title: "+notification.title
+                notificationText.text = "Text: "+notification.text
+                notificationBigText.text = "Big text: "+notification.bigText
+                notificationSubText.text = "Sub text: "+notification.subText
+                notificationPkgName.text = "Pkg name: "+notification.packageName
+                notificationAiResp.text = "AI resp: "+notification.aiResp
+
+                if (notification.trigger) {
+                root.setBackgroundColor(Color.RED)
+                } else {
+                    root.setBackgroundColor(Color.WHITE)
+                }
             }
         }
     }

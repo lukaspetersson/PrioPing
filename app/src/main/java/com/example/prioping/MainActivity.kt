@@ -1,5 +1,8 @@
 package com.example.prioping
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -29,6 +32,17 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_settings, R.id.navigation_logs
             )
         )
+
+        val channelName = getString(R.string.channel_name)
+        val channelDescription = getString(R.string.channel_description)
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel("NotificationListenerServiceChannel", channelName, importance).apply {
+            description = channelDescription
+        }
+        val notificationManager: NotificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

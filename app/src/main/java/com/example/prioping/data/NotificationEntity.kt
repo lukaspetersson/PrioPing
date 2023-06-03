@@ -9,6 +9,10 @@ data class NotificationEntity(
     val timestamp: Long,
     val title: String?,
     val text: String?,
-    val packageName: String
+    val subText: String?,
+    val bigText: String?,
+    val packageName: String,
+    val aiResp: String,
+    val trigger: Boolean
 )
 

@@ -11,6 +11,10 @@ import com.example.prioping.service.NotificationService
 class SettingsViewModel(private val context: Context) : ViewModel() {
 
     private val serviceComponent = ComponentName(context, NotificationService::class.java)
+    private val sharedPreferences = context.getSharedPreferences("com.example.prioping", Context.MODE_PRIVATE)
+    var isServiceActive: Boolean
+        get() = sharedPreferences.getBoolean("service_active", true)
+        set(value) = sharedPreferences.edit().putBoolean("service_active", value).apply()
 
     class SettingsViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -32,19 +36,19 @@ class SettingsViewModel(private val context: Context) : ViewModel() {
         return enabledNotificationListeners.contains(serviceComponent.flattenToString())
     }
 
-    fun startService() {
+   fun startService() {
         if (!isServiceEnabled()) {
-            // Launch settings to grant permission
             context.startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK
             })
+            isServiceActive = true
         }
     }
 
     fun stopService() {
         if (isServiceEnabled()) {
-            // Stop the service
             context.stopService(Intent(context, NotificationService::class.java))
+            isServiceActive = false
         }
     }
 }

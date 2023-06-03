@@ -1,7 +1,6 @@
 package com.example.prioping.ui.logs
 
 import android.os.Bundle
-import android.service.notification.StatusBarNotification
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,13 +32,16 @@ class LogsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = NotificationAdapter()
-        view.findViewById<RecyclerView>(R.id.notificationsRecyclerView).adapter = adapter
+        val recyclerView = view.findViewById<RecyclerView>(R.id.notificationsRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        adapter = NotificationAdapter()
+        recyclerView.adapter = adapter
 
         logsViewModel.notifications.observe(viewLifecycleOwner) { notifications ->
             adapter.notifications = notifications
         }
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

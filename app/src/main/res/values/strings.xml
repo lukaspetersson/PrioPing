@@ -3,4 +3,6 @@
     <string name="title_home">Home</string>
     <string name="title_settings">Settings</string>
     <string name="title_logs">Logs</string>
+    <string name="channel_name">Notification Listener</string>
+    <string name="channel_description">Notification Listener Service Channel</string>
 </resources>
