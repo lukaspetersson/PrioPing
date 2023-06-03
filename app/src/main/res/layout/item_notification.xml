@@ -12,40 +12,40 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/notification_text"
+    <LinearLayout
+        android:id="@+id/expandable_part"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp" />
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <TextView
-        android:id="@+id/notification_sub_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp" />
+        <TextView
+            android:id="@+id/notification_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp" />
 
-    <TextView
-        android:id="@+id/notification_big_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp" />
+        <TextView
+            android:id="@+id/notification_sub_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp" />
 
-    <TextView
-        android:id="@+id/notification_pkg_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp" />
+        <TextView
+            android:id="@+id/notification_big_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp" />
 
-    <TextView
-        android:id="@+id/notification_ai_resp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="8dp" />
+        <TextView
+            android:id="@+id/notification_ai_resp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp" />
 
+    </LinearLayout>
 </LinearLayout>
-
