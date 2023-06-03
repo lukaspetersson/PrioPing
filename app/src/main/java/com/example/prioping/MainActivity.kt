@@ -25,14 +25,6 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-
-        // Only include the IDs for our new fragments in the AppBarConfiguration
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_settings, R.id.navigation_logs
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
 }
