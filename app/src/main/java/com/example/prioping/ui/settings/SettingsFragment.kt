@@ -24,7 +24,6 @@ class SettingsFragment : Fragment() {
         return root
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val viewModel: SettingsViewModel by viewModels {
@@ -32,6 +31,9 @@ class SettingsFragment : Fragment() {
                 requireContext()
             )
         }
+
+        // Set the initial state of the toggle button according to the service state
+        toggleButton.isChecked = viewModel.isServiceActive
 
         toggleButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
@@ -44,4 +46,3 @@ class SettingsFragment : Fragment() {
         }
     }
 }
-

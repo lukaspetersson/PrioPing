@@ -36,11 +36,10 @@ class NotificationAdapter : RecyclerView.Adapter<NotificationAdapter.ViewHolder>
                 notificationSubText.text = "Sub text: "+notification.subText
                 notificationPkgName.text = "Pkg name: "+notification.packageName
                 notificationAiResp.text = "AI resp: "+notification.aiResp
-
                 if (notification.trigger) {
-                root.setBackgroundColor(Color.RED)
+                    notificationTitle.setBackgroundColor(Color.RED)
                 } else {
-                    root.setBackgroundColor(Color.WHITE)
+                    notificationTitle.setBackgroundColor(Color.GREEN)
                 }
             }
         }

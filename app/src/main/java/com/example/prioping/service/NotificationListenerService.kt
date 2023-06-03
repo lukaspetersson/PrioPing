@@ -64,12 +64,16 @@ class NotificationService : NotificationListenerService() {
 
                 CoroutineScope(Dispatchers.IO).launch {
                     val fromTime = notification.timestamp - 10_000  // 10 seconds ago
-
                     val recentSimilarNotification = notificationDao.getRecentSimilarNotification(fromTime, title, text, subText, bigText, packageName)
-                    if (recentSimilarNotification == null) {
-                        notificationDao.insert(notification)
+
+                    // Make sure not all fields are null
+                    if (title != null || text != null || subText != null || bigText != null) {
+                        if (recentSimilarNotification == null) {
+                            notificationDao.insert(notification)
+                        }
                     }
                 }
+
             }
         }
     }
