@@ -59,51 +59,15 @@ class NotificationService : NotificationListenerService() {
                     bigText = bigText,
                     packageName = packageName,
                     aiResp = "Test",
-                    trigger = false
+                    trigger = packageName.contains("google.android.gm")
                 )
 
                 CoroutineScope(Dispatchers.IO).launch {
-                        val fromTime = notification.timestamp - 10_000  // 10 seconds ago
+                    val fromTime = notification.timestamp - 10_000  // 10 seconds ago
 
-                        val recentSimilarNotification = notificationDao.getRecentSimilarNotification(fromTime, title, text, subText, bigText, packageName)
-                        if (recentSimilarNotification == null) {
-                            notificationDao.insert(notification)
-                                    if (notification.trigger) {
-                                        val notifyIntent = Intent(
-                                            this@NotificationService,
-                                            MainActivity::class.java
-                                        ).apply {
-                                            flags =
-                                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                        }
-                                        val notifyPendingIntent = PendingIntent.getActivity(
-                                            this@NotificationService,
-                                            0,
-                                            notifyIntent,
-                                            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-                                        )
-
-                                        val builder = NotificationCompat.Builder(
-                                            this@NotificationService,
-                                            "NotificationListenerServiceChannel"
-                                        )
-                                            .setSmallIcon(R.drawable.ic_home_black_24dp)
-                                            .setContentTitle("PrioPing!")
-                                            .setContentText("$title - $text")
-                                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                                            .setContentIntent(notifyPendingIntent)
-                                            .setAutoCancel(true)
-
-                                        with(NotificationManagerCompat.from(this@NotificationService)) {
-                                            if (ActivityCompat.checkSelfPermission(
-                                                    this@NotificationService,
-                                                    Manifest.permission.POST_NOTIFICATIONS
-                                                ) == PackageManager.PERMISSION_GRANTED
-                                            ) {
-                                                notify(notification.id, builder.build())
-                                            }
-                                        }
-                                    }
+                    val recentSimilarNotification = notificationDao.getRecentSimilarNotification(fromTime, title, text, subText, bigText, packageName)
+                    if (recentSimilarNotification == null) {
+                        notificationDao.insert(notification)
                     }
                 }
             }

@@ -32,18 +32,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_settings, R.id.navigation_logs
             )
         )
-
-        val channelName = getString(R.string.channel_name)
-        val channelDescription = getString(R.string.channel_description)
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel("NotificationListenerServiceChannel", channelName, importance).apply {
-            description = channelDescription
-        }
-        val notificationManager: NotificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
-
-
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
