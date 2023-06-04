@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ToggleButton
 import androidx.fragment.app.viewModels
+import com.aallam.openai.client.OpenAI
 import com.example.prioping.R
 
 class TriggerFragment : Fragment() {

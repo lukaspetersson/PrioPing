@@ -14,7 +14,7 @@ class TriggerViewModel(private val context: Context) : ViewModel() {
     private val sharedPreferences = context.getSharedPreferences("com.example.prioping", Context.MODE_PRIVATE)
 
     var isServiceActive: Boolean
-        get() = sharedPreferences.getBoolean("service_active", true)
+        get() = sharedPreferences.getBoolean("service_active", false)
         set(value) = sharedPreferences.edit().putBoolean("service_active", value).apply()
 
     var apiKey: String
