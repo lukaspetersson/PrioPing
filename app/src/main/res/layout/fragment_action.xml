@@ -13,7 +13,13 @@
         android:text="What to do with flagged notifications"
         android:textSize="18sp"
         android:layout_marginBottom="8dp"/>
-
+    <ToggleButton
+        android:id="@+id/error_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOff="Treat Errors as Unflagged"
+        android:textOn="Treat Errors as Flagged"
+        android:checked="false"/>
     <CheckBox
         android:id="@+id/email_flagged_checkbox"
         android:layout_width="wrap_content"
@@ -27,7 +33,8 @@
         android:layout_height="wrap_content"
         android:text="Email unflagged"
         android:layout_marginBottom="8dp"/>
-        <com.google.android.material.textfield.TextInputLayout
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_field_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

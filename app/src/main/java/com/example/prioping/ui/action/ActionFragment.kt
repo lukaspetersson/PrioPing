@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ToggleButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.prioping.R
@@ -14,13 +15,13 @@ import com.google.android.material.textfield.TextInputLayout
 
 class ActionFragment : Fragment() {
 
-    private lateinit var viewModel: ActionViewModel
     private lateinit var emailFieldLayout: TextInputLayout
     private lateinit var emailField: TextInputEditText
     private lateinit var emailFlaggedCheckbox: CheckBox
     private lateinit var emailUnflaggedCheckbox: CheckBox
     private lateinit var filterFlaggedCheckbox: CheckBox
     private lateinit var filterUnflaggedCheckbox: CheckBox
+    private lateinit var errorToggle: ToggleButton
     private lateinit var saveButton: Button
 
     override fun onCreateView(
@@ -35,6 +36,7 @@ class ActionFragment : Fragment() {
         emailUnflaggedCheckbox = root.findViewById(R.id.email_unflagged_checkbox)
         filterFlaggedCheckbox = root.findViewById(R.id.filter_flagged_checkbox)
         filterUnflaggedCheckbox = root.findViewById(R.id.filter_unflagged_checkbox)
+        errorToggle = root.findViewById(R.id.error_toggle)
         saveButton = root.findViewById(R.id.save_button)
         return root
     }
@@ -53,6 +55,7 @@ class ActionFragment : Fragment() {
     emailUnflaggedCheckbox.isChecked = viewModel.emailUnflagged
     filterFlaggedCheckbox.isChecked = viewModel.filterFlagged
     filterUnflaggedCheckbox.isChecked = viewModel.filterUnflagged
+    errorToggle.isChecked = viewModel.isErrorFlagged
 
     // Manage visibility of email field initially
     manageEmailFieldVisibility()
@@ -64,6 +67,12 @@ class ActionFragment : Fragment() {
     emailUnflaggedCheckbox.setOnCheckedChangeListener { _, _ ->
         manageEmailFieldVisibility()
     }
+
+
+            errorToggle.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.isErrorFlagged = isChecked
+
+            }
 
     saveButton.setOnClickListener {
         viewModel.email = emailField.text.toString()

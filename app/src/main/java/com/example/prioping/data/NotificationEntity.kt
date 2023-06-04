@@ -13,6 +13,8 @@ data class NotificationEntity(
     val bigText: String?,
     val packageName: String,
     val aiResp: String,
-    val trigger: Boolean
+    val flagged: Boolean,
+    val error: Boolean = false
+
 )
 

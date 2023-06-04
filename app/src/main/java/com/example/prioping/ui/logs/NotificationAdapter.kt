@@ -35,7 +35,7 @@ class NotificationAdapter :
             with(binding) {
                 val appName = getAppNameFromPackageName(notification.packageName, itemView.context)
                 notificationTitle.text = "$appName: ${notification.title}"
-                notificationTitle.setTextColor(if (notification.trigger) Color.RED else Color.WHITE)
+                notificationTitle.setTextColor(if (notification.flagged) Color.RED else Color.WHITE)
 
                 itemView.setOnClickListener {
                     expandablePart.toggleVisibility()

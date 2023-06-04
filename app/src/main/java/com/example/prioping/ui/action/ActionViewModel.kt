@@ -28,6 +28,10 @@ class ActionViewModel(private val context: Context) : ViewModel() {
         get() = sharedPreferences.getBoolean("filter_unflagged", false)
         set(value) = sharedPreferences.edit().putBoolean("filter_unflagged", value).apply()
 
+    var isErrorFlagged: Boolean
+        get() = sharedPreferences.getBoolean("error_flagged", false)
+        set(value) = sharedPreferences.edit().putBoolean("error_flagged", value).apply()
+
     class ActionViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(ActionViewModel::class.java)) {

@@ -13,6 +13,7 @@ interface NotificationDao {
     @Query("SELECT * FROM notifications ORDER BY timestamp DESC")
     fun getNotifications(): LiveData<List<NotificationEntity>>
 
+    //TODO: fix
     @Query("SELECT * FROM notifications WHERE timestamp >= :fromTime AND title = :title AND text = :text AND bigText = :bigText AND subText = :subText AND packageName = :packageName ORDER BY timestamp DESC LIMIT 1")
     suspend fun getRecentSimilarNotification(fromTime: Long, title: String?, text: String?, bigText: String?, subText: String?, packageName: String?): NotificationEntity?
 
