@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/info_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Instruct the AI which notifications to flag"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <ToggleButton
+        android:id="@+id/service_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textOn="Service On"
+        android:textOff="Service Off"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/info_text" />
+
+    <EditText
+        android:id="@+id/api_key_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter OpenAI API Key"
+        android:maxLength="300"
+        android:inputType="text"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/service_toggle" />
+
+    <ScrollView
+        android:id="@+id/instruction_field_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/save_button"
+        android:layout_below="@id/api_key_field">
+
+        <EditText
+            android:id="@+id/instruction_field"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter instructions for the AI"
+            android:maxLength="300"
+            android:inputType="textMultiLine"
+            android:layout_marginTop="16dp" />
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:layout_marginTop="16dp"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

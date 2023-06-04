@@ -30,7 +30,6 @@ class NotificationService : NotificationListenerService() {
 
     private val notificationDao = MyApplication.database.notificationDao()
 
-
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
         super.onNotificationPosted(sbn)
 
@@ -50,7 +49,16 @@ class NotificationService : NotificationListenerService() {
             val packageName = it.packageName
             val isSystemApp = (it.notification.flags and Notification.FLAG_FOREGROUND_SERVICE) != 0
 
+            val trigger = packageName.contains("google.android.gm")
+            val aiResp = "Test"
+
             if (!isSystemApp && !packageName.contains("com.android") && !packageName.contains("example.prioping")) {
+                Log.w("EEEEEEE", packageName+"EEEEEEEEEEEEEE: "+trigger)
+
+                if (trigger) {
+                    //cancelNotification(it.key)
+                    snoozeNotification(it.key, 3000)
+                }
                 val notification = NotificationEntity(
                     timestamp = System.currentTimeMillis(),
                     title = title,
@@ -58,8 +66,8 @@ class NotificationService : NotificationListenerService() {
                     subText = subText,
                     bigText = bigText,
                     packageName = packageName,
-                    aiResp = "Test",
-                    trigger = packageName.contains("google.android.gm")
+                    aiResp = aiResp,
+                    trigger = trigger
                 )
 
                 CoroutineScope(Dispatchers.IO).launch {
@@ -70,6 +78,7 @@ class NotificationService : NotificationListenerService() {
                     if (title != null || text != null || subText != null || bigText != null) {
                         if (recentSimilarNotification == null) {
                             notificationDao.insert(notification)
+
                         }
                     }
                 }

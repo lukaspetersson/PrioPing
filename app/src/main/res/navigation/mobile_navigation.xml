@@ -2,13 +2,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/navigation_settings">
+    app:startDestination="@id/navigation_trigger">
 
     <fragment
-        android:id="@+id/navigation_settings"
-        android:name="com.example.prioping.ui.settings.SettingsFragment"
-        android:label="@string/title_settings"
-        tools:layout="@layout/fragment_settings" />
+        android:id="@+id/navigation_trigger"
+        android:name="com.example.prioping.ui.trigger.TriggerFragment"
+        android:label="@string/title_trigger"
+        tools:layout="@layout/fragment_trigger" />
+
+    <fragment
+            android:id="@+id/navigation_action"
+            android:name="com.example.prioping.ui.action.ActionFragment"
+            android:label="@string/title_trigger"
+            tools:layout="@layout/fragment_action" />
 
     <fragment
         android:id="@+id/navigation_logs"

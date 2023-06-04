@@ -29,18 +29,19 @@ class LogsFragment : Fragment() {
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.notificationsRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = NotificationAdapter()
-        recyclerView.adapter = adapter
+    val recyclerView = view.findViewById<RecyclerView>(R.id.notificationsRecyclerView)
+    recyclerView.layoutManager = LinearLayoutManager(context)
+    adapter = NotificationAdapter()
+    recyclerView.adapter = adapter
 
-        logsViewModel.notifications.observe(viewLifecycleOwner) { notifications ->
-            adapter.notifications = notifications
-        }
+    logsViewModel.notifications.observe(viewLifecycleOwner) { notifications ->
+        adapter.submitList(notifications)
     }
+}
+
 
     override fun onDestroyView() {
         super.onDestroyView()
