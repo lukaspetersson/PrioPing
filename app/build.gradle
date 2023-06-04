@@ -43,17 +43,9 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
 
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-
-      // import Kotlin API client BOM
     implementation platform('com.aallam.openai:openai-client-bom:3.2.5')
-
-    // define dependencies without versions
     implementation 'com.aallam.openai:openai-client'
     runtimeOnly 'io.ktor:ktor-client-okhttp'
-
-
 
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'

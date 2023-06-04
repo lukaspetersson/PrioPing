@@ -12,23 +12,13 @@ import com.aallam.openai.api.chat.ChatCompletion
 import com.aallam.openai.api.chat.ChatCompletionRequest
 import com.aallam.openai.api.chat.ChatMessage
 import com.aallam.openai.api.chat.ChatRole
-import com.aallam.openai.api.http.Timeout
 import com.aallam.openai.api.model.ModelId
 import com.aallam.openai.client.OpenAI
 import com.example.prioping.MyApplication
-import com.example.prioping.ai.OpenAIApi
-import com.example.prioping.ai.OpenAIApiRequestBody
-import com.example.prioping.ai.OpenAIApiResponseBody
 import com.example.prioping.data.NotificationEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.OkHttpClient
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import java.util.Locale
-import kotlin.time.Duration.Companion.seconds
 
 class NotificationService : NotificationListenerService() {
 
@@ -47,13 +37,9 @@ class NotificationService : NotificationListenerService() {
         if (!isServiceActive) return
 
         sbn?.let {
-            // gmail: sender, messenger: sender
             val title = it.notification.extras.getCharSequence("android.title")?.toString()
-            // gmail: subject, messenger: message
             val text = it.notification.extras.getCharSequence("android.text")?.toString()
-            // gmail: lukas.pe..., messenger: null
             val subText = it.notification.extras.getCharSequence("android.subText")?.toString()
-            // gmail: subject+message?
             val bigText = it.notification.extras.getCharSequence("android.bigText")?.toString()
             val packageName = it.packageName
             val isSystemApp = (it.notification.flags and Notification.FLAG_FOREGROUND_SERVICE) != 0
@@ -173,45 +159,6 @@ class NotificationService : NotificationListenerService() {
         )
         return openai.chatCompletion(chatCompletionRequest)
     }
-
-
-    private suspend fun getAdiResponse(apiKey: String, prompt: String): Response<OpenAIApiResponseBody> {
-    val client = OkHttpClient.Builder()
-        .addInterceptor { chain ->
-            val originalRequest = chain.request()
-            val requestBuilder = originalRequest.newBuilder()
-                .header("Authorization", "Bearer $apiKey")
-            val request = requestBuilder.build()
-            chain.proceed(request)
-        }.build()
-
-    val api = Retrofit.Builder()
-        .baseUrl("https://api.openai.com/")
-        .client(client)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-        .create(OpenAIApi::class.java)
-
-    val system_prompt = "You are a productivity assistant helping me to flag notifications that need my attention and filter out the rest."
-
-    val body = OpenAIApiRequestBody(
-        model = "gpt-3.5-turbo",
-        messages = listOf(
-            OpenAIApiRequestBody.Message(
-                role = "system",
-                content = system_prompt
-            ),
-            OpenAIApiRequestBody.Message(
-                role = "user",
-                content = prompt
-            )
-        )
-    )
-    return api.getAiResponse(body)
-}
-
-
-
 
     override fun onNotificationRemoved(sbn: StatusBarNotification?) {
         super.onNotificationRemoved(sbn)
