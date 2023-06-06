@@ -15,6 +15,5 @@ data class NotificationEntity(
     val aiResp: String,
     val flagged: Boolean,
     val error: Boolean = false
-
 )
 

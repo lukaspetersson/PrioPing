@@ -48,12 +48,7 @@ class NotificationService : NotificationListenerService() {
                 val instructions = sharedPreferences.getString("instruction", "")?: ""
                 val isErrorFlagged = sharedPreferences.getBoolean("error_flagged", false)
                 CoroutineScope(Dispatchers.IO).launch {
-
                     val prompt = getPrompt(instructions, packageName, title, text, subText, bigText)
-                    Log.e("EEEEE", "11111111111: "+prompt)
-
-                    // You need to implement getAiResponse()
-                    // This should be a function which calls the OpenAI API using the apiKey and instructions
                     var aiResp: String = ""
                     var errorOccurred: Boolean = false
                     if (apiKey.isEmpty()) {
@@ -67,7 +62,6 @@ class NotificationService : NotificationListenerService() {
                     else{
                         try {
                             val response = getAiResponse(apiKey, prompt)
-                            Log.e("EEEEE", "3333333333333: "+response)
                             aiResp = response.choices[0].message?.content.toString()
                         } catch (e: Exception) {
                             aiResp = "Error: "+e.message
@@ -75,10 +69,7 @@ class NotificationService : NotificationListenerService() {
                         }
                     }
 
-                    Log.e("EEEEE", "3333333333333: "+aiResp)
-
                     val flagged = if (errorOccurred) isErrorFlagged else aiResp.split(" ").last().lowercase().contains("flag")
-                    Log.e("EEEEE", "44444444444: "+flagged)
 
                     val actionEmailFlagged = sharedPreferences.getBoolean("email_flagged", false)
                     val actionEmailUnflagged = sharedPreferences.getBoolean("email_unflagged", false)
@@ -88,16 +79,11 @@ class NotificationService : NotificationListenerService() {
 
                     if ((flagged && actionFilterFlagged) || (!flagged && actionFilterUnflagged)) {
                         cancelNotification(it.key)
-                        Log.e("EEEEE", "555555555: CANCEL")
-
                     }
 
                     if ((flagged && actionEmailFlagged) || (!flagged && actionEmailUnflagged)) {
-                        // You need to implement sendEmail()
-                        // This should be a function which sends an email using the SMTP server to the emailAddress
                         //sendEmail(emailAddress, title, text)
-                        Log.e("EEEEE", "666666666: EMAIL")
-
+                        //TODO: send email
                     }
 
                     val notification = NotificationEntity(
