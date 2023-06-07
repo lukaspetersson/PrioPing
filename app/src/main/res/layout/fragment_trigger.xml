@@ -19,6 +19,14 @@
         android:textOff="Service Off"
         android:layout_marginTop="16dp"
         android:layout_below="@id/info_text" />
+    <Button
+    android:id="@+id/selectAppsButton"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Select Apps"
+                android:layout_below="@id/service_toggle" />
+
+
 
     <EditText
         android:id="@+id/api_key_field"
@@ -28,7 +36,7 @@
         android:maxLength="300"
         android:inputType="text"
         android:layout_marginTop="16dp"
-        android:layout_below="@id/service_toggle" />
+        android:layout_below="@id/selectAppsButton" />
 
     <ScrollView
         android:id="@+id/instruction_field_scroll"

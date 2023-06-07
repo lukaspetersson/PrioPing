@@ -12,5 +12,9 @@ interface NotificationDao {
 
     @Query("SELECT * FROM notifications ORDER BY timestamp DESC")
     fun getNotifications(): LiveData<List<NotificationEntity>>
+
+        @Query("DELETE FROM notifications")
+        suspend fun clearAll()
+
 }
 

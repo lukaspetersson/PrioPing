@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,9 @@ class LogsFragment : Fragment() {
     private var _binding: FragmentLogsBinding? = null
     private val binding get() = _binding!!
 
+        private lateinit var clearLogsButton: Button
+
+
     private lateinit var adapter: NotificationAdapter
 
     override fun onCreateView(
@@ -25,6 +29,8 @@ class LogsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentLogsBinding.inflate(inflater, container, false)
+                clearLogsButton = binding.root.findViewById(R.id.clear_logs_button)
+
         return binding.root
     }
 
@@ -32,7 +38,7 @@ class LogsFragment : Fragment() {
 override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    val recyclerView = view.findViewById<RecyclerView>(R.id.notificationsRecyclerView)
+    val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
     recyclerView.layoutManager = LinearLayoutManager(context)
     adapter = NotificationAdapter()
     recyclerView.adapter = adapter
@@ -40,6 +46,11 @@ override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     logsViewModel.notifications.observe(viewLifecycleOwner) { notifications ->
         adapter.submitList(notifications)
     }
+
+        // Handle Clear Logs Button Click
+        clearLogsButton.setOnClickListener {
+            logsViewModel.clearLogs()
+        }
 }
 
 
