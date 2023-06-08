@@ -47,15 +47,17 @@ class NotificationAdapter :
             }
         }
 
-        private fun getAppNameFromPackageName(packageName: String, context: Context): String {
-            val packageManager = context.packageManager
-            return try {
-                val applicationInfo = packageManager.getApplicationInfo(packageName, 0)
-                packageManager.getApplicationLabel(applicationInfo).toString()
-            } catch (e: PackageManager.NameNotFoundException) {
-                packageName
-            }
-        }
+      private fun getAppNameFromPackageName(packageName: String, context: Context): String {
+    val packageManager = context.applicationContext.packageManager
+    return try {
+        val applicationInfo = packageManager.getApplicationInfo(packageName, 0)
+        val appName = packageManager.getApplicationLabel(applicationInfo).toString()
+        appName
+    } catch (e: PackageManager.NameNotFoundException) {
+        packageName
+    }
+}
+
 
         private fun TextView.setTextOrHide(prefix: String, text: String?) {
             text?.let {

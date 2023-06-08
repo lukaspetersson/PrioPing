@@ -25,6 +25,11 @@ class TriggerViewModel(private val context: Context) : ViewModel() {
         get() = sharedPreferences.getString("instruction", "") ?: ""
         set(value) = sharedPreferences.edit().putString("instruction", value).apply()
 
+var selectedApps: Set<String>
+    get() = sharedPreferences.getStringSet("selected_apps", setOf()) ?: setOf()
+    set(value) = sharedPreferences.edit().putStringSet("selected_apps", value).apply()
+
+
     class TriggerViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             if (modelClass.isAssignableFrom(TriggerViewModel::class.java)) {
@@ -52,6 +57,19 @@ class TriggerViewModel(private val context: Context) : ViewModel() {
             isServiceActive = true
         }
     }
+
+
+fun addApp(packageName: String) {
+    val newSet = selectedApps.toMutableSet()
+    newSet.add(packageName)
+    selectedApps = newSet
+}
+
+fun removeApp(packageName: String) {
+    val newSet = selectedApps.toMutableSet()
+    newSet.remove(packageName)
+    selectedApps = newSet
+}
 
     fun stopService() {
         if (isServiceEnabled()) {
